@@ -83,4 +83,20 @@
     <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
+  <!-- =================================================================== -->
+  <!-- StyleCop Configuration                                              -->
+  <!-- =================================================================== -->
+  <!--
+    Default stylecop.json is included from the package.
+    To override: add your own stylecop.json to your project/solution root.
+    The local file will take precedence due to AdditionalFiles ordering.
+  -->
+  <PropertyGroup>
+    <LvlupIncludeStyleCopConfig Condition="'$(LvlupIncludeStyleCopConfig)' == ''">true</LvlupIncludeStyleCopConfig>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(LvlupIncludeStyleCopConfig)' == 'true'">
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
 </Project>

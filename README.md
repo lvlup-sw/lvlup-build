@@ -38,6 +38,13 @@ And to your `Directory.Packages.props`:
 | Microsoft.CodeAnalysis.NetAnalyzers | 10.0.0 | Code quality and .NET best practices |
 | Microsoft.VisualStudio.Threading.Analyzers | 17.14.15 | Async/threading correctness |
 
+### StyleCop Configuration
+
+The package includes a default `stylecop.json` that is automatically linked to your projects. To override:
+
+1. Add your own `stylecop.json` to your `src/` directory
+2. Or disable the default: `<LvlupIncludeStyleCopConfig>false</LvlupIncludeStyleCopConfig>`
+
 ### Build Properties
 
 The package automatically configures:
