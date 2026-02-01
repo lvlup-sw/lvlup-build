@@ -1,0 +1,86 @@
+<!--
+  Lvlup.Build.props
+  =================
+  This file is automatically imported by NuGet when a project references the Lvlup.Build package.
+  It provides default build settings that can be overridden by consuming projects.
+
+  Override Points:
+  - LvlupEnableAnalyzers: Set to 'false' to disable all analyzers
+  - LvlupTreatWarningsAsErrors: Set to 'false' to allow warnings
+  - LvlupEnableNullable: Set to 'false' to disable nullable reference types
+
+  Example override in Directory.Build.props:
+    <PropertyGroup>
+      <LvlupTreatWarningsAsErrors Condition="'$(Configuration)' == 'Debug'">false</LvlupTreatWarningsAsErrors>
+    </PropertyGroup>
+-->
+<Project>
+
+  <!-- =================================================================== -->
+  <!-- Override Points (set these BEFORE importing Lvlup.Build)           -->
+  <!-- =================================================================== -->
+  <PropertyGroup>
+    <!-- Master switch for all analyzers -->
+    <LvlupEnableAnalyzers Condition="'$(LvlupEnableAnalyzers)' == ''">true</LvlupEnableAnalyzers>
+
+    <!-- Treat warnings as errors -->
+    <LvlupTreatWarningsAsErrors Condition="'$(LvlupTreatWarningsAsErrors)' == ''">true</LvlupTreatWarningsAsErrors>
+
+    <!-- Enable nullable reference types -->
+    <LvlupEnableNullable Condition="'$(LvlupEnableNullable)' == ''">true</LvlupEnableNullable>
+
+    <!-- Run analyzers during build (not just in IDE) -->
+    <LvlupRunAnalyzersDuringBuild Condition="'$(LvlupRunAnalyzersDuringBuild)' == ''">true</LvlupRunAnalyzersDuringBuild>
+  </PropertyGroup>
+
+  <!-- =================================================================== -->
+  <!-- Language Settings                                                   -->
+  <!-- =================================================================== -->
+  <PropertyGroup>
+    <!-- Always use latest C# language version -->
+    <LangVersion>latest</LangVersion>
+
+    <!-- Enable implicit usings for cleaner code -->
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!-- =================================================================== -->
+  <!-- Nullable Reference Types                                            -->
+  <!-- =================================================================== -->
+  <PropertyGroup Condition="'$(LvlupEnableNullable)' == 'true'">
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- =================================================================== -->
+  <!-- Analyzer Configuration                                              -->
+  <!-- =================================================================== -->
+  <PropertyGroup Condition="'$(LvlupEnableAnalyzers)' == 'true'">
+    <!-- Enable .NET analyzers -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+
+    <!-- Use latest analysis rules -->
+    <AnalysisLevel>latest</AnalysisLevel>
+
+    <!-- Run analyzers during build, not just in IDE -->
+    <RunAnalyzersDuringBuild>$(LvlupRunAnalyzersDuringBuild)</RunAnalyzersDuringBuild>
+  </PropertyGroup>
+
+  <!-- =================================================================== -->
+  <!-- Warnings as Errors                                                  -->
+  <!-- =================================================================== -->
+  <PropertyGroup Condition="'$(LvlupTreatWarningsAsErrors)' == 'true'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <!-- =================================================================== -->
+  <!-- Deterministic Builds                                                -->
+  <!-- =================================================================== -->
+  <PropertyGroup>
+    <!-- Enable deterministic builds for reproducibility -->
+    <Deterministic>true</Deterministic>
+
+    <!-- Enable continuous integration mode when building in CI -->
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+</Project>

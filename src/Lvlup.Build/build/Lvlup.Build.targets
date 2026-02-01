@@ -1,0 +1,27 @@
+<!--
+  Lvlup.Build.targets
+  ====================
+  This file is automatically imported by NuGet AFTER the project file is processed.
+  Use this for targets that need to run during the build, or for properties that
+  depend on values set in the project file.
+
+  Currently minimal - expand as needed for custom build tasks.
+-->
+<Project>
+
+  <!-- =================================================================== -->
+  <!-- Build Validation                                                    -->
+  <!-- =================================================================== -->
+
+  <!--
+    Warn if project doesn't have Central Package Management enabled.
+    This runs early in the build to catch configuration issues.
+  -->
+  <Target Name="LvlupValidateCentralPackageManagement"
+          BeforeTargets="CollectPackageReferences"
+          Condition="'$(ManagePackageVersionsCentrally)' != 'true'">
+    <Warning Code="LVLUP001"
+             Text="Central Package Management is not enabled. Add &lt;ManagePackageVersionsCentrally&gt;true&lt;/ManagePackageVersionsCentrally&gt; to Directory.Packages.props." />
+  </Target>
+
+</Project>

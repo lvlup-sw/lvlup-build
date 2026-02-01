@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Package targets netstandard2.0 for maximum compatibility -->
+    <TargetFramework>netstandard2.0</TargetFramework>
+
+    <!-- Package metadata -->
+    <PackageId>Lvlup.Build</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Levelup Software</Authors>
+    <Company>Levelup Software</Company>
+    <Description>Levelup Software build standards, analyzers, and code style enforcement for .NET projects.</Description>
+    <PackageTags>analyzers;stylecop;roslyn;build;standards</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/lvlup-sw/lvlup-build</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <!-- This is a development-only package -->
+    <DevelopmentDependency>true</DevelopmentDependency>
+
+    <!-- Don't include any build output - this is purely a props/targets package -->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+
+    <!-- Suppress warnings about no lib folder -->
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Analyzer dependencies - PrivateAssets="none" ensures they flow to consuming projects.
+      These analyzers will be automatically applied to any project that references Lvlup.Build.
+    -->
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" PrivateAssets="none" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.0" PrivateAssets="none" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" PrivateAssets="none" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Pack the build props/targets into the package -->
+    <None Include="build\**" Pack="true" PackagePath="build" />
+
+    <!-- Include README in the package -->
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
