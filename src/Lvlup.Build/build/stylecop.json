@@ -4,6 +4,7 @@
     "documentationRules": {
       "companyName": "Levelup Software",
       "copyrightText": "Copyright (c) {companyName}. All rights reserved.",
+      "headerDecoration": "=====================================================================",
       "documentExposedElements": true,
       "documentInternalElements": false,
       "documentPrivateElements": false,
@@ -16,11 +17,21 @@
       "blankLinesBetweenUsingGroups": "omit"
     },
     "namingRules": {
+      "includeInferredTupleElementNames": false,
       "tupleElementNameCasing": "camelCase"
+    },
+    "maintainabilityRules": {
+      "topLevelTypes": ["class", "interface", "struct", "enum", "delegate"]
     },
     "layoutRules": {
       "newlineAtEndOfFile": "omit",
       "allowConsecutiveUsings": true
+    },
+    "readabilityRules": {
+      "allowBuiltInTypeAliases": true
+    },
+    "spacingRules": {
+      "allowLineEndingComment": true
     }
   }
 }
