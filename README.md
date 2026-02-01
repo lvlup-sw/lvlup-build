@@ -91,25 +91,9 @@ Templates for these files are available via the `/dotnet-standards` Claude skill
 /dotnet-standards scaffold MyProject --company "My Company"
 ```
 
-## GitHub Packages
+## Installation
 
-This package is published to GitHub Packages. To consume it, add a `nuget.config`:
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
-    <add key="github" value="https://nuget.pkg.github.com/lvlup-sw/index.json" />
-  </packageSources>
-  <packageSourceCredentials>
-    <github>
-      <add key="Username" value="USERNAME" />
-      <add key="ClearTextPassword" value="GITHUB_TOKEN" />
-    </github>
-  </packageSourceCredentials>
-</configuration>
-```
+This package is published to [nuget.org](https://www.nuget.org/packages/Lvlup.Build). No special configuration needed.
 
 ## License
 
