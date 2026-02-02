@@ -6,7 +6,7 @@
 
     <!-- Package metadata -->
     <PackageId>Lvlup.Build</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.2.1</Version>
     <Authors>Levelup Software</Authors>
     <Company>Levelup Software</Company>
     <Description>Drop-in meta-package bundling StyleCop, Roslyn, and threading analyzers with opinionated defaults.</Description>
