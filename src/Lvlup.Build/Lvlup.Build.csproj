@@ -6,10 +6,10 @@
 
     <!-- Package metadata -->
     <PackageId>Lvlup.Build</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Levelup Software</Authors>
     <Company>Levelup Software</Company>
-    <Description>Levelup Software build standards, analyzers, and code style enforcement for .NET projects.</Description>
+    <Description>Drop-in meta-package bundling StyleCop, Roslyn, and threading analyzers with opinionated defaults.</Description>
     <PackageTags>analyzers;stylecop;roslyn;build;standards</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -33,7 +33,7 @@
       These analyzers will be automatically applied to any project that references Lvlup.Build.
     -->
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" PrivateAssets="none" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.0" PrivateAssets="none" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.100" PrivateAssets="none" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" PrivateAssets="none" />
   </ItemGroup>
 
