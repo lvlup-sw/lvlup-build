@@ -99,4 +99,20 @@
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
+  <!-- =================================================================== -->
+  <!-- Global Analyzer Configuration                                       -->
+  <!-- =================================================================== -->
+  <!--
+    Default globalconfig enforces formatting rules as errors.
+    These rules are auto-fixable via 'dotnet format'.
+    To override: set LvlupIncludeGlobalConfig to 'false' and provide your own.
+  -->
+  <PropertyGroup>
+    <LvlupIncludeGlobalConfig Condition="'$(LvlupIncludeGlobalConfig)' == ''">true</LvlupIncludeGlobalConfig>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(LvlupIncludeGlobalConfig)' == 'true'">
+    <GlobalAnalyzerConfigFiles Include="$(MSBuildThisFileDirectory)Lvlup.Build.globalconfig" />
+  </ItemGroup>
+
 </Project>

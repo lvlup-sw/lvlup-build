@@ -1,0 +1,53 @@
+# =============================================================================
+# Lvlup.Build - Centralized Analyzer Severity Configuration
+# =============================================================================
+# These rules are auto-fixable via 'dotnet format' and enforced as errors.
+# This ensures consistent formatting across all lvlup-sw repositories.
+#
+# To override in a specific project, add a local .globalconfig with:
+#   global_level = 1  (higher level wins)
+#   dotnet_diagnostic.SAXXXX.severity = warning
+# =============================================================================
+
+is_global = true
+global_level = 0
+
+# =============================================================================
+# StyleCop Formatting Rules - ERROR (auto-fixable)
+# =============================================================================
+
+# SA1025: Code should not contain multiple whitespace characters in a row
+dotnet_diagnostic.SA1025.severity = error
+
+# SA1119: Statement should not use unnecessary parenthesis
+dotnet_diagnostic.SA1119.severity = error
+
+# SA1137: Elements should have the same indentation
+dotnet_diagnostic.SA1137.severity = error
+
+# SA1500: Braces for multi-line statements should not share line
+dotnet_diagnostic.SA1500.severity = error
+
+# SA1501: Statement should not be on a single line
+dotnet_diagnostic.SA1501.severity = error
+
+# SA1507: Code should not contain multiple blank lines in a row
+dotnet_diagnostic.SA1507.severity = error
+
+# SA1508: Closing brace should not be preceded by a blank line
+dotnet_diagnostic.SA1508.severity = error
+
+# SA1513: Closing brace should be followed by blank line
+dotnet_diagnostic.SA1513.severity = error
+
+# =============================================================================
+# C# Compiler - Duplicate Usings - ERROR (auto-fixable)
+# =============================================================================
+
+# CS0105: The using directive appeared previously in this namespace
+dotnet_diagnostic.CS0105.severity = error
+
+# =============================================================================
+# Note: Other SA* rules remain at their default severity (warning/suggestion)
+# Projects can override in their own .editorconfig or .globalconfig
+# =============================================================================
