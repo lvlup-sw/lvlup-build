@@ -24,4 +24,53 @@
              Text="Central Package Management is not enabled. Add &lt;ManagePackageVersionsCentrally&gt;true&lt;/ManagePackageVersionsCentrally&gt; to Directory.Packages.props." />
   </Target>
 
+  <PropertyGroup>
+    <LvlupConfigureAwait Condition="'$(LvlupConfigureAwait)' == ''">true</LvlupConfigureAwait>
+    <NoWarn Condition="'$(LvlupConfigureAwait)' == 'true' and '$(Language)' == 'C#'">$(NoWarn);VSTHRD111</NoWarn>
+  </PropertyGroup>
+
+  <Target Name="LvlupConfigureAwaitCompileInput" BeforeTargets="CoreCompile"
+          Condition="'$(DesignTimeBuild)' != 'true' and '$(Language)' == 'C#' and '$(IsCrossTargetingBuild)' != 'true'">
+    <Error Condition="'$(LvlupConfigureAwait)' != 'true' and '$(LvlupConfigureAwait)' != 'false'"
+           Text="LvlupConfigureAwait must be true or false." />
+    <!-- Changing the policy must rebuild the intermediate assembly from source. -->
+    <PropertyGroup>
+      <_LvlupAwaitInput>$(IntermediateOutputPath)LvlupConfigureAwait.g.cs</_LvlupAwaitInput>
+    </PropertyGroup>
+    <GetFileHash Files="$(_LvlupAwaitTool)" Condition="'$(LvlupConfigureAwait)' == 'true'">
+      <Output TaskParameter="Hash" PropertyName="_LvlupAwaitToolHash" />
+    </GetFileHash>
+    <WriteLinesToFile File="$(_LvlupAwaitInput)"
+                      Lines="// LvlupConfigureAwait=$(LvlupConfigureAwait) $(_LvlupAwaitToolHash)"
+                      Overwrite="true" WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <Compile Include="$(_LvlupAwaitInput)" />
+      <FileWrites Include="$(_LvlupAwaitInput)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="LvlupRewriteConfigureAwait" AfterTargets="CoreCompile"
+          Condition="'$(LvlupConfigureAwait)' == 'true' and '$(DesignTimeBuild)' != 'true'
+                     and '$(SkipCompilerExecution)' != 'true' and '$(Language)' == 'C#'
+                     and '$(IsCrossTargetingBuild)' != 'true'"
+          Inputs="@(IntermediateAssembly);$(MSBuildThisFileFullPath);$(_LvlupAwaitTool)"
+          Outputs="$(IntermediateOutputPath)LvlupConfigureAwait.stamp">
+    <PropertyGroup>
+      <_LvlupAwaitReferences>$(IntermediateOutputPath)LvlupConfigureAwait.references</_LvlupAwaitReferences>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(_LvlupAwaitTool)')" Text="Lvlup.Build ConfigureAwait tooling is missing." />
+    <WriteLinesToFile File="$(_LvlupAwaitReferences)" Lines="@(ReferencePath->'%(FullPath)')" Overwrite="true" />
+    <Exec Command="&quot;$(_LvlupDotnet)&quot; &quot;$(_LvlupAwaitTool)&quot; &quot;@(IntermediateAssembly->'%(FullPath)')&quot; &quot;$(_LvlupAwaitReferences)&quot; &quot;$(KeyOriginatorFile)&quot; &quot;$(PublicSign)&quot; &quot;$(DelaySign)&quot;" />
+    <Touch Files="$(IntermediateOutputPath)LvlupConfigureAwait.stamp" AlwaysCreate="true" />
+    <ItemGroup>
+      <FileWrites Include="$(_LvlupAwaitReferences);$(IntermediateOutputPath)LvlupConfigureAwait.stamp" />
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup>
+    <_LvlupAwaitTool>$(MSBuildThisFileDirectory)../tools/ConfigureAwait/Lvlup.Build.ConfigureAwait.dll</_LvlupAwaitTool>
+    <_LvlupDotnet Condition="'$(DOTNET_HOST_PATH)' != ''">$(DOTNET_HOST_PATH)</_LvlupDotnet>
+    <_LvlupDotnet Condition="'$(_LvlupDotnet)' == ''">dotnet</_LvlupDotnet>
+  </PropertyGroup>
+
 </Project>

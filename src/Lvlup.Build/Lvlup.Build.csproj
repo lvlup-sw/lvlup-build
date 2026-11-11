@@ -41,8 +41,26 @@
     <!-- Pack the build props/targets into the package -->
     <None Include="build\**" Pack="true" PackagePath="build" />
 
+      <None Include="../ConfigureAwait/LICENSE-*.txt" Pack="true" PackagePath="tools/ConfigureAwait/" />
+
     <!-- Include README in the package -->
     <None Include="..\..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../ConfigureAwait/ConfigureAwait.csproj"
+                      ReferenceOutputAssembly="false" PrivateAssets="all"
+                      SkipGetTargetFrameworkProperties="true" />
+  </ItemGroup>
+
+  <Target Name="IncludeConfigureAwaitTool" BeforeTargets="_GetPackageFiles">
+    <ItemGroup>
+      <None Include="../ConfigureAwait/bin/$(Configuration)/net10.0/*.dll;
+                     ../ConfigureAwait/bin/$(Configuration)/net10.0/*.json"
+            Pack="true" PackagePath="tools/ConfigureAwait/" />
+    </ItemGroup>
+    <Error Condition="!Exists('../ConfigureAwait/bin/$(Configuration)/net10.0/Lvlup.Build.ConfigureAwait.dll')"
+           Text="Build the ConfigureAwait tool before packing Lvlup.Build." />
+  </Target>
 
 </Project>

@@ -98,3 +98,27 @@ This package is published to [nuget.org](https://www.nuget.org/packages/Lvlup.Bu
 ## License
 
 MIT
+
+## Automatic ConfigureAwait
+
+C# builds using the .NET 10 SDK apply `ConfigureAwait(false)` to implicit awaits of
+`Task`, `Task<T>`, `ValueTask`, and `ValueTask<T>`, including the implicit
+awaits emitted for asynchronous iteration and disposal. Explicit ConfigureAwait
+calls retain their semantics. The task runs during the build and uses no Fody
+packages. The IL tooling is bundled privately in this package.
+
+For a project that needs its previous capture behavior, opt out in the project
+file or set the property in the repository's Directory.Build.props:
+
+```xml
+<PropertyGroup>
+  <LvlupConfigureAwait>false</LvlupConfigureAwait>
+</PropertyGroup>
+```
+
+Opting out restores the VSTHRD111 source policy. Opted-in projects suppress only
+that diagnostic. Review UI and other context-sensitive code for explicit capture
+when upgrading. Public- or delay-signed projects should opt out.
+
+The IL transformation is adapted from ConfigureAwait 3.4.1 under MIT. The
+original notice is included alongside the packaged build tooling.
